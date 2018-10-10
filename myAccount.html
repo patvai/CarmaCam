@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta http-equiv="content-type" content="application/x-www-form-urlencoded">
+    <meta name="description" content="">
+    <meta name="author" content="Ting Gong">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <title>MyAccount</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" href="css/myAccount.css">
+</head>
+<body>
+<div id='logo' width="100%" style="background-color:white">
+    <a href='index.html'><img src='img/carmacam_logo4.jpg' height="100px"></a>
+</div>
+<div class="Container" ng-app="AccountApp" ng-controller="displayData" id="containerDiv">
+    <!--TODO: need to add default value for all display field-->
+    <a ng-init="loadHello()"></a>
+    <div class="page-header">
+        <h1>My Account</h1>
+        <p class='lead'>Your account information and credit points</p>
+        <button type="button" class="btn btn-default" id="logout" ng-click="logout()">Log out</button>
+    </div>
+    <div class="row" id="infoPanel">
+        <div id="userInfo" class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <table>
+                <thead>
+                <h2 style="font-weight: 600">{{name}}</h2>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><h3>Phone Number: </h3></td>
+                    <td><h3 class="bluetext">{{phoneNo}}</h3></td>
+                </tr>
+                <tr>
+                    <td><h3>License Plate #: </h3></td>
+                    <td><h3 class="bluetext">{{licensePlateNo}}</h3></td>
+                </tr>
+                <tr>
+                    <td><h3>Zipcode #: </h3></td>
+                    <td><h3 class="bluetext">{{zipcode}}</h3></td>
+                </tr>
+                </tbody>
+            </table>
+            <br /><br />
+            <h3>Your Rewards</h3>
+            <p>
+            <h3 class="bluetext">{{rewards}}</h3></p>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <h2>Bad Driver Reports near you (last 30 days)</h2>
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <div class="page-header" id="reportStatusPanel">
+        <div id="pendingPanel">
+            <h2>Pending Reports</h2>
+            <button ng-click="removePendingReports()" style="float:right;">Delete Selected</button>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th colspan="4">Pending Report Links</th>
+                    <p> Pending: {{pendingSum}}</p>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="pendingUrl in pendingReportsUrl">
+                    <td style="vertical-align: middle;"><input type="checkbox" ng-model="pendingUrl.isDelete" /></td>
+                    <td class="reportNumFrame">{{$index + 1}}</td>
+                    <td class="capturedImgFrame" style="font-size: 30"><a href="{{pendingUrl.url}}"><img class="capturedImg" src="{{pendingUrl.imgsrc}}"/></a></td>
+                    <td class="reportLink"><a ng-href="{{pendingUrl.url}}">Click here to review pending report</a></td>
+                    <td class="timeStamp">{{pendingUrl.time}}</td>
+                    <td style="vertical-align: middle; text-align: right;"><button ng-click="removeCurPendingReport($index)">Delete</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="inReviewPanel">
+            <h2>In Review Reports</h2>
+            <button ng-click="removeInReviewReports()" style="float:right;">Delete Selected</button>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th colspan="4">In-Review Report Links</th>
+                    <p> In Review: {{inReviewSum}}</p>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="inReviewUrl in inReviewReportsUrl">
+                    <td style="vertical-align: middle;"><input type="checkbox" ng-model="inReviewUrl.isDelete" /></td>
+                    <td class="reportNumFrame">{{$index + 1}}</td>
+                    <td class="capturedImgFrame" style="font-size: 30"><a href="{{inReviewUrl.url}}"><img class="capturedImg" src="{{inReviewUrl.imgsrc}}"/></a></td>
+                    <td class="reportLink"><a ng-href="{{inReviewUrl.url}}">Click here to review in-review report</a></td>
+                    <td class="timeStamp">{{inReviewUrl.time}}</td>
+                    <td style="vertical-align: middle; text-align: right;"><button ng-click="removeCurInReviewReport($index)">Delete</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="passedPanel">
+            <h2>Passed Reports</h2>
+            <button ng-click="removePassedReports()" style="float:right;">Delete Selected</button>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th colspan="4">Passed Report Links</th>
+                    <p>Passed: {{passedSum}}</p>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="passedUrl in passedReportsUrl">
+                    <td style="vertical-align: middle;"><input type="checkbox" ng-model="passedUrl.isDelete" /></td>
+                    <td class="reportNumFrame">{{$index + 1}}</td>
+                    <td class="capturedImgFrame" style="font-size: 30"><a href="{{passedUrl.url}}"><img class="capturedImg" ng-src="{{passedUrl.imgsrc}}"/></a>></td>
+                    <td class="reportLink"><a ng-href="{{passedUrl.url}}">Click here to review passed report</a></td>
+                    <td style="vertical-align: middle; text-align: right;"><button ng-click="removeCurPassedReport($index)">Delete</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="FailedPanel">
+            <h2>Failed Reports</h2>
+            <button ng-click="removeFailedReports()" style="float:right;">Delete Selected</button>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Failed Report Links</th>
+                    <p>Failed: {{failedSum}}</p>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="failedUrl in failedReportsUrl">
+                    <td style="vertical-align: middle;"><input type="checkbox" ng-model="failedUrl.isDelete" /></td>
+                    <td class="reportNumFrame">{{$index + 1}}</td>
+                    <td class="capturedImgFrame" style="font-size: 30"><a href="{{failedUrl.url}}"><img class="capturedImg" ng-src="{{failedUrl.imgsrc}}"/></a></td>
+                    <td class="reportLink"><a ng-href="{{failedUrl.url}}">Click here to review failed report</a></td>
+                    <td style="vertical-align: middle text-align: right;"><button ng-click="removeCurfailedReport($index)">Delete</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="AllReports">
+            <h2>All Reports</h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Links</th>
+                    <p>Total # of reports: {{reportSum}}</p>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="url in allReportsUrl">
+                    <td>{{$index + 1}}</td>
+                    <td><a ng-href="{{url.url}}">Click here to review</a></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<script src="js/myAccount.js"></script>
+<script>
+  function initMap() {
+    var $element = $('#containerDiv');
+    var scope = angular.element($element).scope();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 10,
+      center: new google.maps.LatLng(scope.center_lat, scope.center_lng),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+    });
+    var gradients = {
+      color: [
+        'rgba(0, 0, 0, 0)',
+        'rgba(0, 0, 0, 0)',
+        'rgba(0, 0, 0, 0)',
+        'rgba(0, 0, 159, 1)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(255, 0, 0, 1)',
+      ],
+    };
+    google.maps.event.addDomListener(
+      window,
+      'load',
+      function () {
+        window.setTimeout(initMap, 4);
+      }
+    );
+    var infowindow = new google.maps.InfoWindow();
+    var geocoder = new google.maps.Geocoder;
+    var marker, i, _lat, _lng;
+    for (i = 0; i < scope.result.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(scope.result[i][0], scope.result[i][1]),
+        radius: 13,
+        opacity: 100,
+        map: map,
+        animation: google.maps.Animation.DROP,
+      });
+
+      google.maps.event.addListener(marker, 'click', (function (marker, i) {
+        return function () {
+          _lat = scope.result[i][0];
+          _lng = scope.result[i][1];
+          geocodeLatLng(geocoder, map, infowindow, _lat, _lng);
+        };
+      })(marker, i));
+    }//for
+
+    function geocodeLatLng(geocoder, map, infowindow, _lat, _lng) {
+      var latlng = { lat: parseFloat(_lat), lng: parseFloat(_lng) };
+      geocoder.geocode({ 'location': latlng }, function (results, status) {
+        if (status === 'OK') {
+          if (results[1]) {
+            map.setZoom(11);
+            var marker = new google.maps.Marker({
+              position: latlng,
+              map: map,
+            });
+            infowindow.setContent(results[1].formatted_address);
+            infowindow.open(map, marker);
+          } else {
+            window.alert('No results found');
+          }
+        } else {
+          window.alert('Geocoder failed due to: ' + status);
+        }
+      });
+    }
+  }
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+        integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"
+        integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"
+        integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"
+        crossorigin="anonymous"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4qbjtP9PAOvPURg6kuMxBrpfd8KBtggU&callback=initMap">
+</script>
+</body>
+</html>

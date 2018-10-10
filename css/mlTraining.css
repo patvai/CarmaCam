@@ -1,0 +1,42 @@
+.ml-container{
+    color: #00c0fff7;
+    text-align: center;
+}
+div {
+    margin-bottom: 2%;
+    margin-top:2%;
+}
+ .video_block{
+    height:50vh;
+}
+.start_image{
+    height:40vh;
+    border: solid black;
+    border-width: 1px 1px 1px 1px;
+    background-color:black;
+    border-radius: 10px;
+}
+.end_image{
+    height:40vh;
+    border: solid black;
+    border-width: 1px 1px 1px 1px;
+    background-color:black;
+    border-radius: 10px;
+}
+.full_video {
+    height: 40vh;
+    border: solid black;
+    border-width: 1px 1px 1px 1px;
+    background-color:black;
+    
+}
+.annotate_st {
+    background-color: #de8e15 !important;
+}
+div.container {
+    border: solid black;
+    border-width: 1px 1px 1px 1px;
+}
+.capture_btn{
+    text-align:center;
+}
