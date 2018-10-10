@@ -1,0 +1,43 @@
+body {
+  background: url(../img/bg.jpg);
+  background-size:cover;
+  background-repeat: no-repeat;
+
+}
+#logo img{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.video-container {
+    height: 300px;
+    margin-left: 10px;
+    float:left;
+}
+.cropArea {
+  background: #E4E4E4;
+  height:300px;
+  background: #000;
+}
+
+
+.cropped{
+    text-align: center;
+  overflow: hidden;
+}
+
+.add-space { width:col-xs-4; height:225px;}
+
+#extract-container {
+  width: 1250px;
+  max-width: none !important;
+}
+
+#logo .banner{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.add-brk { display: none; }
