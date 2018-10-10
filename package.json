@@ -1,0 +1,29 @@
+{
+  "name": "carmaCam",
+  "version": "",
+  "description": "carma-cam front end code",
+  "repository": "",
+  "license": "",
+  "private": true,
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-cli": "^2.0.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "pump": "^3.0.0"
+  },
+  "scripts": {
+    "sync": "aws s3 sync ./build s3://carma-cam.yj83leetest.space --delete --acl public-read --exclude 'img/**' --exclude '.DS_Store' --cache-control 'max-age=0'",
+    "zip": "zip -r ../carma-cam-front-end-code ./build"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "gulp": "^3.9.1"
+  }
+}
