@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Carma Cam - Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/register.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <!--International Telephone Input-->
+    <link rel="stylesheet" href="lib/intlTelInput.css">
+    <script src="lib/intlTelInput.js"></script>
+</head>
+<body>
+<div id='logo' style="width:100%; background: white">
+    <a href='./index.html'><img src="img/carmacam_logo4.jpg" height="100px"></a>
+</div>
+<div ng-app="myApp" ng-controller="myCtrl" class="login-container">
+    <div class="login" style="align-content: center">
+        <br>
+        <form method="post" ng-submit="submitData()">
+            <input type="text" ng-model="fname" placeholder="First Name" required="required" />
+            <input type="text" ng-model="lname" placeholder="Last Name" required="required" />
+            <input type="text" ng-model="username" placeholder="Username" />
+            <input type="text" ng-model="license" placeholder="License Plate Number" maxlength="8" required="required" />
+            <input type="email" ng-model="email" placeholder="Email" required="required" />
+            <input type="tel" id="phone" ng-model="phone" placeholder="Phone" maxlength="10" required="required" />
+            <br><br><input type="password" style="margin-top: -11px" ng-model="password" maxlength="20" minlength="8" placeholder="Password" required="required" />
+            <input type="text" ng-model="zipcode" placeholder="Zipcode" maxlength="5" required />
+            <button type="submit" class="btn btn-primary btn-block btn-large"><b>Register</b></button>
+            <span class="red">{{error}}</span>
+        </form>
+        <button class="btn btn-secondary btn-block btn-large" onclick="window.location='login.html'"><b
+                style="color: #0e90d2">Log In</b></button>
+        <br /><br /><br /><br />
+    </div>
+</div>
+</body>
+<script src="js/register.js"></script>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.5.0/rzslider.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/ng-img-crop.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <title>CarmaCam</title>
+    <link rel="stylesheet" href="css/extract-image.css">
+
+</head>
+<body>
+<div ng-app="app" ng-controller="Ctrl">
+
+    <div id='logo' width="100%" style="background-color:white">
+        <a href='myAccount.html'><img src='img/carmacam_logo4.jpg' height="100px"></a>
+    </div>
+
+    <div id='extract-container' class="container" >
+        <div class="clearfix">
+            <div class="col-xs-3 pull-left">
+                <button class="btn btn-secondary btn-resize" ng-click="back()">Back</button>
+            </div>
+            <div class="col-xs-9">
+                <span style="color: white;"></span>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="video-container" ng-init="getVideo()">
+                    <div>Video</div>
+                    <br>
+                    <video class="add-space" id="video" controls crossorigin="anonymous">
+                        <source src="" type="video/mp4">
+                        <source src="" type="video/webm">
+                        <source src="" type="video/ogg">
+                        Enable pop-ups, clear cache, enable Javascript and refresh.
+                        If this still does not work, your browser does not support HTML5 video.
+                    </video>
+                    <br><br>
+                    <button class="btn btn-default" id="capture">Capture</button>
+                    <br><br>
+                    <canvas id="thecanvas" width=0 height=0></canvas>
+                </div>
+
+            </div>
+
+
+            <div class="col-xs-4 cropped">
+                <div>Cropped Image</div>
+                <br>
+                <canvas id="my_canvas" width="225" height="225"></canvas><br><br>
+                <!-- <div> -->
+                <!-- <img ng-src="{{ myCroppedImage }}" id="finalImage" style="display: none;"/> -->
+                <!-- </div> -->
+                <!-- angularjs-slider and image canvas -->
+
+            </div>
+
+            <div id="mycontroller" class="col-xs-4">
+                <div>Captured Image</div>
+                <br>
+                <div class="cropArea  add-space">
+                    <img-crop image="myImage" result-image="myCroppedImage" result-image-quality="1"
+                              result-image-size="225" area-type="square" on-change="handle_crop($dataURI)"></img-crop>
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-xs-4 spacerow">
+                <label>Brightness: {{ brightness_slider.value }}</label>
+                <rzslider rz-slider-model="brightness_slider.value" rz-slider-options="brightness_slider.options"></rzslider><br>
+            </div>
+            <div class="col-xs-4 spacerow">
+                    <label>Contrast: {{ contrast_slider.value }}  </label>
+                    <rzslider rz-slider-model="contrast_slider.value" rz-slider-options="contrast_slider.options"></rzslider><br>
+            </div>
+            <div class="col-xs-4 spacerow">
+                <label>Exposure: {{ exposure_slider.value }}</label>
+                <rzslider rz-slider-model="exposure_slider.value" rz-slider-options="exposure_slider.options"></rzslider><br>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-xs-4">
+            </div>
+            <div class="col-xs-4">
+                <div class="col-xs-6">
+                    <button class="btn btn-warning" name="reset_button" style="margin-bottom: auto; color: black;" id="reset_button" ng-click="reset_config()">
+                        Reset
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn btn-primary float-right" style="margin-bottom: auto" id="done" ng-click="uploadImage()">
+                        Done
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-4">
+            </div>
+        </div>
+        <br>
+
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="lib/ng-img-crop.js"></script>
+<!-- include angularjs-slider css & min.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/6.5.0/rzslider.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="lib/bootbox.min.js"></script>
+<!-- include caman.js -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="js/extract-image-kai.js"></script>
+</body>
+</html>

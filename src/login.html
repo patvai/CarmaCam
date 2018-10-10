@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>CarmaCam login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+            integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7"
+            crossorigin="anonymous"></script>
+
+    <!--International Telephone Input-->
+    <link rel="stylesheet" href="lib/intlTelInput.css">
+    <script src="lib/intlTelInput.js"></script>
+</head>
+<body>
+<div id='logo' width="100%" style="background-color:white">
+    <a href='http://www.carma-cam.com/index.html'><img src='img/carmacam_logo4.jpg' height="100px"></a>
+</div>
+<div ng-app="myApp" ng-controller="myCtrl" class="login-container">
+    <div class="login">
+        <span style="margin-left: 600px; font-size: 30px"></span>
+        <br><br>
+        <form name="userForm" method="post">
+            <span class="red">{{error}}</span>
+            <table>
+                <tr>
+                    <td>
+                        <input type="tel" id="phone" maxlength="15" ng-model="phone"
+                               placeholder="Phone number(7483927383)" required="required" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="password" ng-model="password" placeholder="Password" required="required" />
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <button type="submit" ng-click="submitData()" class="btn btn-primary btn-block"
+                    ng-disabled="userForm.$invalid"><b>Login</b></button>
+        </form>
+        <button type="button" class="btn btn-secondary btn-block" id="register" ng-click="signup()"><b>Sign Up</b>
+        </button>
+        <br><br><br>
+        <button type="button" class="btn btn-secondary btn-block" id="forgot-password" ng-click="forgotPassword()">
+            <b>Forgot Password</b>
+        </button>
+    </div>
+</div>
+</body>
+<script src="js/login.js"></script>
+</html>
