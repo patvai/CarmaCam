@@ -25,9 +25,7 @@ div {
 }
 .full_video {
     height: 40vh;
-    border: solid black;
     border-width: 1px 1px 1px 1px;
-    background-color:black;
     
 }
 .annotate_st {

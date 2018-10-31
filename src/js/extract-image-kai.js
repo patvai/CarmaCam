@@ -36,10 +36,13 @@ app.controller('Ctrl', function ($scope, $sce, $http) {
     var current_img = new Image();
 
     $scope.getVideo = function () {
-        const videoId = window.location.search.split('&')[0].split('=')[1];
-        $scope.reportId = window.location.search.split('&')[1].split('=')[1];
-        var vid = document.getElementById('video');
-        vid.src = backendUrl + '/downloadFile/' + videoId;
+        if(window.location.search){
+            const videoId = window.location.search.split('&')[0].split('=')[1];
+            $scope.reportId = window.location.search.split('&')[1].split('=')[1];
+            var vid = document.getElementById('video');
+            vid.src = backendUrl + '/downloadFile/' + videoId;
+        }
+      
     };
 
     $scope.back = () => {

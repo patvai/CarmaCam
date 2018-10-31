@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 //$('#phone').intlTelInput();
 
-const app = angular.module('myApp', []);
+const app = angular.module('myApp', ['ui.slider']);
 app.controller('mlTrainingPage', ($scope, $http) => {
     //update the backend url with correct url
   const backendUrl = 'https://cloudserver.carma-cam.com';
@@ -22,6 +22,16 @@ app.controller('mlTrainingPage', ($scope, $http) => {
   $('#capture_btn').on('click', function () {
     alert("capture image");
 });
+var vm = this;
+
+vm.priceSlider = {
+    minValue: 200,
+    maxValue: 300,
+    options: {
+        floor: 0,
+        ceil: 500,
+    }
+}
 
   
 
@@ -52,4 +62,95 @@ app.controller('mlTrainingPage', ($scope, $http) => {
     //   const errorMsg = (err.error) ? err.error : err;
     //   $scope.error = `Server error: ${errorMsg}`;
     // });
+});
+
+// app.directive('player', function(){
+//   'use strict';
+//   return {
+//     restrict: 'E',
+//     template: '<div class="wide"><video width = "525vh" height = "200vh" autoplay controls><source ng-src="img/VID_test.mp4" type="video/mp4" /></video></div>' +
+//             '<slider floor="0" ceiling="100" step="1" ng-model="currentPercent" change="onSliderChange()"></slider>' +
+//             '<slider floor="0" ceiling="{{ duration }}" step="0.1" precision="10" ng-model-low="start" ng-model-high="end" change="onTrimChange()"></slider>' + 
+//             '<p>start = {{ start }}</p><p>current = {{ current }}</p><p>end = {{ end }}</p>'+
+//             '<rzslider rz-slider-model="brightness_slider.value" rz-slider-options="brightness_slider.options"></rzslider><br>',
+//     // template: '<video width="500vh" height="200vh" controls>'+
+//     // ' <source src="img/VID_test.mp4" type="video/mp4">'+
+//     // '<source src="movie.ogg" type="video/ogg">Your browser does not support the video tag.</video>',
+//     link:function (scope, element, attrs) {
+//       var ele = element.find('video');
+//       console.log(ele);
+//     }
+//   }
+// });
+app.directive("player", function() {
+  return {
+      restrict : "E",
+      template : '<div class="wide">'+
+                  '<video width = "525vh" height = "200vh" autoplay controls>'+
+                  '<source ng-src="img/testVideo.mp4" type="video/mp4" /></video></div>' +
+                   '<slider floor="0" ceiling="{{ duration }}" step="0.1" precision="10" ng-model-low="start" '+
+                   'ng-model-high="end" change="onTrimChange()"></slider>' + 
+                   '<p>start = {{ start }}</p><p>current = {{ current }}</p><p>end = {{ end }}</p>'+
+                   '<rzslider rz-slider-model="brightness_slider.value"'+
+                   'rz-slider-options="brightness_slider.options"></rzslider><br>',
+      link: function(scope, element,attrs){
+        console.log("Akanksha");
+        video = element.find('video');
+        video.on('loadeddata', function (e) {
+          scope.$apply(function () {
+              scope.start = 0;
+              scope.end = e.target.duration;
+              scope.current = scope.start;
+              scope.currentPercent = scope.start;
+              scope.duration = scope.end;
+          });
+      });
+
+      video.on('timeupdate', function (e) {
+        scope.$apply(function () {
+            scope.current = (e.target.currentTime - scope.start);
+            scope.currentPercent = (scope.current / (scope.end - scope.start)) * 100;
+            if (e.target.currentTime < scope.start) {
+                e.target.currentTime = scope.start;
+            }
+            if (e.target.currentTime > scope.end) {
+                if (video[0].paused === false) {
+                    e.target.pause();
+                } else {
+                    e.target.currentTime = scope.start;
+                }
+            }
+        });
+    });
+   
+    scope.onTrimChange = function () {
+        video[0].pause();
+    };
+    
+    scope.onSliderChange = function () {
+      var interval;
+        video[0].pause();
+        if (interval) {
+            window.clearInterval(interval);
+        }
+        interval = window.setTimeout(function () {
+            video[0].currentTime = scope.start + ((scope.currentPercent / 100 ) * (scope.end - scope.start));
+        }, 300);
+    };
+    
+    scope.$watch('start', function (num) {
+        if (num !== undefined) {
+            video[0].currentTime = num;
+        }
+    });
+    scope.$watch('end', function (num) {
+        if (num !== undefined) {
+            video[0].currentTime = num;
+        }
+    });
+      }
+  };
+
+
+
 });
