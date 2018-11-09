@@ -6,8 +6,13 @@ const mongodb = require('mongodb');
 const logger = require('../inc/logger');
 
 // changed
-var jwt = require('jwt-simple');
-var passport  = require('passport');
+const jwt = require('jwt-simple');
+const passport  = require('passport');
+// pass passport for configuration
+require('./config/passport')(passport);
+
+// added
+const secret = 'ranDomSeCret';
 
 const router = express.Router();
 const { ObjectId } = mongodb;
@@ -139,7 +144,7 @@ router.post('*/accounts', async (req, res) => {
 router.get('*/accounts/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   var token = getToken(req.headers); // TODO: the token need to be put in the headers and send here
   if (token) {
-    var decoded = jwt.decode(token, config.secret);
+    var decoded = jwt.decode(token, secret);
     try {
       const query = { _id: new ObjectId(req.params.id) };
       // @ts-ignore

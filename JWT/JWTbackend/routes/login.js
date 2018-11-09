@@ -4,8 +4,11 @@ const wrapper = require('../inc/db');
 const bcrypt = require('bcrypt');
 const logger = require('../inc/logger');
 
+// added
+const secret = 'ranDomSeCret';
+
 // changed
-var jwt = require('jwt-simple');
+const jwt = require('jwt-simple');
 const router = express.Router();
 
 //TODO: to be changed to JWT
@@ -81,7 +84,7 @@ router.post('*/login', (req, res) => {
       // NOTE: added new codes
       // If is match and no error
       // if user is found and password is right create a token
-      var token = jwt.encode(result, config.secret);
+      var token = jwt.encode(result, secret);
       // return the information including token as JSON
       // res.json({success: true, token: 'JWT ' + token});
 
