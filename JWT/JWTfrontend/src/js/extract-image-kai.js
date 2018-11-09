@@ -26,7 +26,8 @@ function draw(video, thecanvas) {
 var app = angular.module('app', ['ngImgCrop', 'rzModule']);
 app.controller('Ctrl', function ($scope, $sce, $http) {
     // const backendUrl = 'https://carma-cam-test-backend.yj83leetest.space/9010';
-    const backendUrl = 'https://cloudserver.carma-cam.com';
+    // const backendUrl = 'https://cloudserver.carma-cam.com';
+    const backendUrl = 'http://0.0.0.0:9001';
 
     $scope.myCroppedImage = '';
     $scope.updateImage = function (dataURL) {

@@ -3,7 +3,8 @@ $('#phone').intlTelInput();
 
 const app = angular.module('myApp', []);
 app.controller('myCtrl', ($scope, $http) => {
-  const backendUrl = 'https://cloudserver.carma-cam.com';
+  // const backendUrl = 'https://cloudserver.carma-cam.com';
+  const backendUrl = 'http://0.0.0.0:9001';
 
 // TODO: do we need to change the backend api endpoint too?
   // $http.get(

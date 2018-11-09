@@ -1,7 +1,8 @@
 const app = angular.module('myfirstangularapp', []);
 
 app.controller('mycontroller', ['$scope', '$http', '$sce', ($scope, $http, $sce) => {
-  const backendUrl = 'https://cloudserver.carma-cam.com';
+  // const backendUrl = 'https://cloudserver.carma-cam.com';
+  const backendUrl = 'http://0.0.0.0:9001';
   // ?reportId=xx&accountId=xx
   const [reportData, accountData] = window.location.search.split('&');
   const [, reportId] = reportData.split('=');
