@@ -4,23 +4,33 @@
 const app = angular.module('myApp', ['ui.slider']);
 app.controller('mlTrainingPage', ($scope, $http) => {
     //update the backend url with correct url
-  const backendUrl = 'https://cloudserver.carma-cam.com';
+  //const backendUrl = 'https://cloudserver.carma-cam.com';
+  const backendUrl = 'http://0.0.0.0:9001';
 
-  $http.get(
-    `${backendUrl}/loginWithCookie`,
-    { withCredentials: true },
-  ).then((res) => {
-    if (res.error || !res.data || !res.data._id) {
-      return;
-    }
+//   $http.get(
+//     `${backendUrl}/loginWithCookie`,
+//     { withCredentials: true },
+//   ).then((res) => {
+//     if (res.error || !res.data || !res.data._id) {
+//       return;
+//     }
 
-    window.location = `myAccount.html?_id=${res.data._id}`;
-  });
+//     window.location = `myAccount.html?_id=${res.data._id}`;
+//   });
 
-  
-  
   $('#capture_btn').on('click', function () {
     alert("capture image");
+    $http({
+        method: 'POST',
+        url: `${backendUrl}/videoTrimmer`,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        withCredentials: true,
+        //data={start:"0", end: "10"},
+      }).success((data, status, header, config) => {
+         console.log('SUCCESS');
+      }).error((data, status, header, config) => {
+         console.log('status : ' + status);
+      });
 });
 var vm = this;
 
@@ -32,12 +42,7 @@ vm.priceSlider = {
         ceil: 500,
     }
 }
-
-  
-
- 
-
-    // $http({
+ // $http({
     //   method: 'POST',
     //   url: `${backendUrl}/login`,
     //   headers: {
@@ -80,17 +85,18 @@ vm.priceSlider = {
 //       var ele = element.find('video');
 //       console.log(ele);
 //     }
-//   }
+//   } width = "525vh" height = "200vh" 
 // });
 app.directive("player", function() {
   return {
       restrict : "E",
       template : '<div class="wide">'+
-                  '<video width = "525vh" height = "200vh" autoplay controls>'+
+                  '<video width= "100%" autoplay controls>'+
                   '<source ng-src="img/testVideo.mp4" type="video/mp4" /></video></div>' +
                    '<slider floor="0" ceiling="{{ duration }}" step="0.1" precision="10" ng-model-low="start" '+
                    'ng-model-high="end" change="onTrimChange()"></slider>' + 
-                   '<p>start = {{ start }}</p><p>current = {{ current }}</p><p>end = {{ end }}</p>'+
+                   '<span class = "spec">Start = {{ start }}</span><span class = "spec">Current = {{ current }}</span>'+
+                   '<span class = "spec">End = {{ end }}</span>'+
                    '<rzslider rz-slider-model="brightness_slider.value"'+
                    'rz-slider-options="brightness_slider.options"></rzslider><br>',
       link: function(scope, element,attrs){

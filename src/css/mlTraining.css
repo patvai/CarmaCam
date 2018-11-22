@@ -3,7 +3,7 @@
     text-align: center;
 }
 div {
-    margin-bottom: 2%;
+    
     margin-top:2%;
 }
  .video_block{
@@ -14,14 +14,14 @@ div {
     border: solid black;
     border-width: 1px 1px 1px 1px;
     background-color:black;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 .end_image{
     height:40vh;
     border: solid black;
     border-width: 1px 1px 1px 1px;
     background-color:black;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 .full_video {
     height: 40vh;
@@ -31,10 +31,16 @@ div {
 .annotate_st {
     background-color: #de8e15 !important;
 }
-div.container {
+div.ml_container {
     border: solid black;
     border-width: 1px 1px 1px 1px;
 }
 .capture_btn{
     text-align:center;
+}
+span.spec {
+    padding-right: 5%;
+}
+video {
+    border-radius:5px;
 }

@@ -23,20 +23,7 @@
 <div id='logo' width="100%" style="background-color:white">
     <a href='index.html'><img src='img/carmacam_logo4.jpg' height="100px"></a>
 </div>
-<div ng-app="myApp" ng-controller="mlTrainingPage">
-   <div class="container">
-        <div class = "col-xs-3"></div>
-            <div class=" col-xs-6 ">
-                <div class = "full_video">
-                <!-- <video width="320" height="240" controls>
-                    <source src="img/VID_test.mp4" type="video/mp4">
-                    <source src="movie.ogg" type="video/ogg">
-                    Your browser does not support the video tag.
-                  </video> -->
-
-                  <player></player>
-
-                  <!-- <div class="">
+ <!-- <div class="">
                       <video width = "520" height = "150" autoplay controls>
                           <source src="img/testVideo.mp4" type="video/mp4" />
                           <source src="movie.ogg" type="video/ogg">
@@ -49,9 +36,14 @@
                 <rzslider rz-slider-model="vm.priceSlider.minValue" 
                     rz-slider-high="vm.priceSlider.maxValue" rz-slider-options="vm.priceSlider.options"></rzslider>
                 </div> -->
-                
+<div ng-app="myApp" ng-controller="mlTrainingPage">
+   <div class="container">
+        <div class = "col-xs-3"></div>
+            <div class=" col-xs-6 ">
+                <div class = "full_video">
 
-
+                  <player></player>
+                 
                 <div class = "col-xs-3"></div>
                 <div class = "col-xs-6 capture_btn">
                     <button class="btn btn-default" id="capture_btn">Capture</button>
@@ -59,11 +51,9 @@
                 <div class = "col-xs-3"></div>
                 
             </div>
-           <div class = "col-xs-3"></div>
-           
-    
-
-        <div class="col-xs-6 ">
+        </div>
+        <div class = "col-xs-3"></div>
+        <div class="col-xs-6">
             <div class =" start_image">  Start Image
             
             </div>
@@ -79,7 +69,7 @@
                 <button class="btn btn-default" id="annotate_end">Annotate</button>
             </div>
         </div>
-    </div>
+    
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
