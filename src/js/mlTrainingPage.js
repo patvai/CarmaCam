@@ -6,32 +6,30 @@ app.controller('mlTrainingPage', ($scope, $http) => {
     //update the backend url with correct url
   //const backendUrl = 'https://cloudserver.carma-cam.com';
   const backendUrl = 'http://0.0.0.0:9001';
-
-//   $http.get(
-//     `${backendUrl}/loginWithCookie`,
-//     { withCredentials: true },
-//   ).then((res) => {
-//     if (res.error || !res.data || !res.data._id) {
-//       return;
-//     }
-
-//     window.location = `myAccount.html?_id=${res.data._id}`;
-//   });
+  $scope.start = 0;
+  $scope.end = 10;
 
   $('#capture_btn').on('click', function () {
-    alert("capture image");
+    alert("capture image"+ $scope.start);
+    alert("capture image"+ $scope.end);
+    var data = $.param({start: $scope.start, end: $scope.end});
     $http({
         method: 'POST',
         url: `${backendUrl}/videoTrimmer`,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         withCredentials: true,
+        data:data,
         //data={start:"0", end: "10"},
-      }).success((data, status, header, config) => {
+      }).success((res) => {
          console.log('SUCCESS');
-      }).error((data, status, header, config) => {
+      }).error((res) => {
          console.log('status : ' + status);
       });
 });
+
+$scope.updateFoo = function (newFoo) {
+    $scope.foo = newFoo;
+}
 var vm = this;
 
 vm.priceSlider = {
@@ -90,11 +88,14 @@ vm.priceSlider = {
 app.directive("player", function() {
   return {
       restrict : "E",
+    //   scope: {
+    //     isolatedAttributeFoo:'@attributeFoo',
+    // },
       template : '<div class="wide">'+
                   '<video width= "100%" autoplay controls>'+
                   '<source ng-src="img/testVideo.mp4" type="video/mp4" /></video></div>' +
                    '<slider floor="0" ceiling="{{ duration }}" step="0.1" precision="10" ng-model-low="start" '+
-                   'ng-model-high="end" change="onTrimChange()"></slider>' + 
+                   'ng-model-high="end" change="onTrimChange($scope)"></slider>' + 
                    '<span class = "spec">Start = {{ start }}</span><span class = "spec">Current = {{ current }}</span>'+
                    '<span class = "spec">End = {{ end }}</span>'+
                    '<rzslider rz-slider-model="brightness_slider.value"'+
@@ -129,8 +130,13 @@ app.directive("player", function() {
         });
     });
    
-    scope.onTrimChange = function () {
+    scope.onTrimChange = function ($scope) {
+        var interval;
         video[0].pause();
+        //$scope.start = scope.start;
+        interval = window.setTimeout(function () {
+            video[0].currentTime = scope.start + ((scope.currentPercent / 100 ) * (scope.end - scope.start));
+        }, 300);
     };
     
     scope.onSliderChange = function () {
