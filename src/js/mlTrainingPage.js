@@ -10,8 +10,6 @@ app.controller('mlTrainingPage', ($scope, $http) => {
   $scope.end = 10;
 
   $('#capture_btn').on('click', function () {
-    alert("capture image"+ $scope.start);
-    alert("capture image"+ $scope.end);
     var data = $.param({start: $scope.start, end: $scope.end});
     $http({
         method: 'POST',
